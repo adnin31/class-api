@@ -20,19 +20,21 @@ The project is built with:
 
 ### **1️⃣ Clone the Repository**
 ```sh
-  git clone <repository-url>
+  git clone <this repo>
   cd class-api
 ```
 
-### **2️⃣ Install Dependencies**
-```sh
-  npm install
-```
+### **2️⃣ Install Docker in your OS**
+- Visit [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/).
+- Visit [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/).
+
+- Or Visit my [Installation Guide](install-docker-guide.md)
+
 
 ### **3️⃣ Set Up Environment Variables**
 Create a `.env` file in the root directory and configure it as follows:
 ```env
-DATABASE_URL=mysql://root:password@db:3306/classdb
+DATABASE_URL=mysql://user:password123@db:3306/school
 ```
 
 ### **4️⃣ Start the Application with Docker**
@@ -40,7 +42,7 @@ DATABASE_URL=mysql://root:password@db:3306/classdb
   npm start
 ```
 
-### **4️⃣ Stop the Application with Docker**
+### **5️⃣ Stop the Application with Docker**
 ```sh
   npm stop
 ```
@@ -50,7 +52,7 @@ This will:
 - Start the **Express.js** API.
 - Expose API endpoints on `http://localhost:3000`.
 
-### **5️⃣ Connect Database in DBeaver**
+### **6️⃣ Connect Database in DBeaver**
 - **Host:** `localhost`
 - **Port:** `3306`
 - **Database:** `school`
@@ -58,17 +60,43 @@ This will:
 - **Password:** `password123`
 - **Enable Public Key Retrieval** if needed.
 
-### **6️⃣ Run Migrations**
+### **7️⃣ Run Migrations**
 ```sh
   npx sequelize-cli db:migrate
 ```
 
 This creates the necessary tables in MySQL.
 
-### **7️⃣ Run Tests**
+### **8️⃣ Run Tests**
 ```sh
   npm test
 ```
+
+---
+
+## **Database Schema**
+
+### **Users Table**
+Stores user details including both teachers and students.
+
+| Column   | Type         | Attributes        |
+|----------|------------|------------------|
+| id       | UUID       | Primary Key       |
+| email    | STRING     | Unique, Not Null |
+| name     | STRING     | Not Null         |
+| role     | ENUM       | ('teacher', 'student') |
+| createdAt | TIMESTAMP  | Auto-generated   |
+| updatedAt | TIMESTAMP  | Auto-generated   |
+
+### **TeacherStudent Table**
+Stores the relationship between teachers and students (many-to-many).
+
+| Column      | Type  | Attributes                      |
+|------------|------|--------------------------------|
+| teacherId  | UUID | Foreign Key (references Users.id) |
+| studentId  | UUID | Foreign Key (references Users.id) |
+| createdAt  | TIMESTAMP | Auto-generated |
+| updatedAt  | TIMESTAMP | Auto-generated |
 
 ---
 
@@ -85,7 +113,12 @@ This creates the necessary tables in MySQL.
   ]
 }
 ```
-**Response:** `HTTP 204 No Content`
+**Response:** **Response:**
+```json
+{
+	"message": "Teacher & students registered successfully"
+}
+```
 
 ### **2️⃣ Get Common Students**
 **Endpoint:** `GET /api/commonstudents?teacher=teacherken@gmail.com`
@@ -102,7 +135,11 @@ This creates the necessary tables in MySQL.
   "student": "studentmary@gmail.com"
 }
 ```
-**Response:** `HTTP 204 No Content`
+**Response:** ```json
+{
+	"message": "Student studentjon@gmail.com has been suspended"
+}
+```
 
 ### **4️⃣ Retrieve Students for Notification**
 **Endpoint:** `POST /api/retrievefornotifications`
@@ -118,13 +155,3 @@ This creates the necessary tables in MySQL.
   "recipients": ["studentbob@gmail.com", "studentagnes@gmail.com", "studentmiche@gmail.com"]
 }
 ```
-
----
-
-## **Next Steps & Enhancements**
-- Implement **pagination** for large student lists.
-- Add **role-based access control**.
-- Improve **error handling** with better responses.
-
-🚀 **Now your API is ready to use!** Happy coding! 🎉
-

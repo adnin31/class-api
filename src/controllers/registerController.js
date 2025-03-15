@@ -32,7 +32,7 @@ export const register = async (req, res) => {
         if (!studentUser) {
           studentUser = await User.create({
             email: studentEmail,
-            name: studentEmail.split("@")[0], // Default name from email
+            name: studentEmail.split("@")[0],
             role: "student",
           });
         } else if (studentUser.role !== "student") {
@@ -42,17 +42,16 @@ export const register = async (req, res) => {
         studentUsers.push(studentUser);
       }
   
-      // Register students to the teacher
       const registrations = studentUsers.map((student) => ({
         teacher_id: teacherUser.id,
         student_id: student.id,
       }));
   
       await TeacherStudent.bulkCreate(registrations, {
-        ignoreDuplicates: true, // Avoid duplicate registrations
+        ignoreDuplicates: true,
       });
   
-      return res.status(201).json({ message: "Teacher & students registered successfully" });
+      return res.status(200).json({ message: "Teacher & students registered successfully" });
     } catch (error) {
       console.error("Error in registration:", error);
       return res.status(500).json({ message: "Internal Server Error" });
