@@ -8,14 +8,12 @@ export const suspendStudent = async (req, res) => {
       return res.status(400).json({ message: "Student email is required" });
     }
 
-    // Find the student by email
     const studentRecord = await User.findOne({ where: { email: student, role: 'student' } });
 
     if (!studentRecord) {
       return res.status(404).json({ message: "Student not found" });
     }
 
-    // Suspend the student
     studentRecord.suspended = true;
     await studentRecord.save();
 

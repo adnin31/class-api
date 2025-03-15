@@ -10,7 +10,6 @@ app.use(express.json());
 
 const routesPath = path.resolve(process.cwd(), "src/routes");
 
-// ✅ FIX: Load routes synchronously BEFORE exporting app
 const loadRoutes = async () => {
   const files = fs.readdirSync(routesPath).filter((file) => file.endsWith(".js"));
   for (const file of files) {
@@ -24,21 +23,21 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log("✅ Database connected");
 
-    await loadRoutes(); // ✅ Load routes first
-    await sequelize.sync(); // Optional: Sync database
+    await loadRoutes(); 
+    await sequelize.sync(); 
 
     if (process.env.NODE_ENV !== "test") {
       const PORT = process.env.PORT || 3000;
-      app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+      app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
     }
   } catch (error) {
-    console.error("❌ Unable to start server:", error);
+    console.error("Unable to start server:", error);
     process.exit(1);
   }
 };
 
-await loadRoutes(); // ✅ Ensure routes are loaded before Jest runs
-export default app; // ✅ Export for Jest
+await loadRoutes(); 
+export default app;
 
 if (process.env.NODE_ENV !== "test") {
   startServer();

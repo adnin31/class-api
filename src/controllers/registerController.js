@@ -5,26 +5,23 @@ import TeacherStudent from "../models/teacherStudent.js";
 export const register = async (req, res) => {
     try {
       const { teacher, students } = req.body;
-  
-      // Validate input
+
       if (!teacher || !students || !Array.isArray(students)) {
         return res.status(400).json({ message: "Invalid request body" });
       }
   
-      // Check if teacher exists, create if not
       let teacherUser = await User.findOne({ where: { email: teacher } });
   
       if (!teacherUser) {
         teacherUser = await User.create({
           email: teacher,
-          name: teacher.split("@")[0], // Default name from email
+          name: teacher.split("@")[0],
           role: "teacher",
         });
       } else if (teacherUser.role !== "teacher") {
         return res.status(400).json({ message: "This email is not a teacher" });
       }
   
-      // Check if students exist, create if not
       const studentUsers = [];
       for (const studentEmail of students) {
         let studentUser = await User.findOne({ where: { email: studentEmail } });

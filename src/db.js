@@ -4,7 +4,7 @@ dotenv.config();
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'mysql',
-  logging: false, // disable logging (optional)
+  logging: false,
 });
 
 const testConnection = async () => {

@@ -8,23 +8,19 @@ export const retrieveForNotifications = async (req, res) => {
       return res.status(400).json({ message: "Teacher and notification are required" });
     }
 
-    // Find the teacher
     const teacherRecord = await User.findOne({ where: { email: teacher, role: "teacher" } });
     if (!teacherRecord) {
       return res.status(404).json({ message: "Teacher not found" });
     }
 
-    // Extract @mentioned students
     const mentionedEmails = notification.match(/@([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+)/g) || [];
     const cleanedMentionedEmails = mentionedEmails.map(email => email.replace("@", ""));
 
-    // Find students registered under the teacher
     const registeredStudents = await teacherRecord.getStudents({
       attributes: ["email"],
       where: { suspended: false },
     });
 
-    // Find @mentioned students who are not suspended
     const mentionedStudents = await User.findAll({
       attributes: ["email"],
       where: {

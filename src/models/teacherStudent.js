@@ -34,7 +34,6 @@ TeacherStudent.init(
   }
 );
 
-// Define Relationships
 User.belongsToMany(User, {
   as: "Students",
   through: TeacherStudent,

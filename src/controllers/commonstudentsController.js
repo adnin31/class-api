@@ -11,10 +11,8 @@ export const commonstudents = async (req, res) => {
         return res.status(400).json({ message: "Teacher email(s) required" });
       }
   
-      // Convert single teacher email to array
       const teacherEmails = Array.isArray(teacher) ? teacher : [teacher];
   
-      // Find teacher IDs
       const teachers = await User.findAll({
         where: { email: teacherEmails, role: "teacher" },
         attributes: ["id"],
@@ -26,7 +24,6 @@ export const commonstudents = async (req, res) => {
   
       const teacherIds = teachers.map((t) => t.id);
   
-      // Find students who are registered to ALL given teachers
       const studentMappings = await TeacherStudent.findAll({
         where: { teacher_id: { [Op.in]: teacherIds } },
         attributes: ["student_id"],
@@ -35,8 +32,7 @@ export const commonstudents = async (req, res) => {
       });
   
       const studentIds = studentMappings.map((s) => s.student_id);
-  
-      // Fetch student emails
+
       const students = await User.findAll({
         where: { id: studentIds, role: "student" },
         attributes: ["email"],
