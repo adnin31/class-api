@@ -16,6 +16,15 @@ The project is built with:
 
 ---
 
+## 🚀 Demo (Live API)
+
+Your API is publicly available at:
+> 🌐 [https://class-api-production.up.railway.app/](https://class-api-production.up.railway.app/)
+
+---
+
+
+---
 ## **Setup Instructions**
 
 ### **1️⃣ Clone the Repository**
