@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "migrate": "NODE_ENV=production npx sequelize-cli db:migrate",
     "start": "docker compose up -d --build",
     "stop": "docker compose down",
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest --forceExit --detectOpenHandles"

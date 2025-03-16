@@ -1,0 +1,15 @@
+{
+  "development": {
+     "url": "mysql://user:password123@db:3306/school",
+    "dialect": "mysql"
+  },
+  "production": {
+    "url": "mysql://root:HNAOlYJBptGryKrOVItSZJayqXOkzijx@shortline.proxy.rlwy.net:19133/railway",
+    "dialect": "mysql",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}
