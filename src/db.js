@@ -1,20 +1,21 @@
-import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-dotenv.config();
+import { Sequelize } from "sequelize";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
-const isProduction = process.env.NODE_ENV === 'production';
+// Import JSON config using require()
+const config = require("../config/config.json");
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'mysql',
-  logging: false,
-  dialectOptions: isProduction
-    ? {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-      }
-    : {},
-});
+const env = process.env.NODE_ENV || "development";
+const dbConfig = config[env];
+
+const sequelize = new Sequelize(
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
+  {
+    ...dbConfig,
+    logging: false,
+  }
+);
 
 export default sequelize;

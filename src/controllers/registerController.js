@@ -48,7 +48,7 @@ export const register = async (req, res) => {
         ignoreDuplicates: true,
       });
   
-      return res.status(200).json({ message: "Teacher & students registered successfully" });
+      return res.status(204).json({ message: "Teacher & students registered successfully" });
     } catch (error) {
       console.error("Error in registration:", error);
       return res.status(500).json({ message: "Internal Server Error" });

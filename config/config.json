@@ -1,15 +1,27 @@
 {
   "development": {
-     "url": "mysql://user:password123@db:3306/school",
+    "username": "user",
+    "password": "password123",
+    "database": "school",
+    "host": "db",
     "dialect": "mysql"
   },
+  "test": {
+    "dialect": "sqlite",
+    "storage": ":memory:"
+  },
   "production": {
-    "url": "mysql://root:HNAOlYJBptGryKrOVItSZJayqXOkzijx@shortline.proxy.rlwy.net:19133/railway",
+    "username": "root",
+    "password": "HNAOlYJBptGryKrOVItSZJayqXOkzijx",
+    "database": "railway",
+    "host": "shortline.proxy.rlwy.net",
     "dialect": "mysql",
     "dialectOptions": {
       "ssl": {
+        "require": true,
         "rejectUnauthorized": false
       }
     }
   }
 }
+

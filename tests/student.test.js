@@ -8,7 +8,7 @@ describe("Student API Tests", () => {
       students: ["studentjon@gmail.com", "studenthon@gmail.com"],
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(204);
   });
 
   test("GET /api/commonstudents - Get common students for a teacher", async () => {
@@ -37,6 +37,6 @@ describe("Student API Tests", () => {
       student: "studentjon@gmail.com",
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(204);
   });
 });

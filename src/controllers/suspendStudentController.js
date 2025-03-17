@@ -17,7 +17,7 @@ export const suspendStudent = async (req, res) => {
     studentRecord.suspended = true;
     await studentRecord.save();
 
-    return res.status(200).json({ message: `Student ${student} has been suspended` });
+    return res.status(204).json({ message: `Student ${student} has been suspended` });
   } catch (error) {
     console.error("Error suspending student:", error);
     return res.status(500).json({ message: "Internal server error" });
